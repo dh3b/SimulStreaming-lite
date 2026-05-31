@@ -12,7 +12,6 @@ class SimulWhisperConfig:
     audio_min_len: float = 1.0
     decoder_type: Literal["greedy","beam"] = "greedy"
     beam_size: int = 5
-    task: Literal["transcribe","translate"] = "transcribe"
     init_prompt: str = field(default=None)
     static_init_prompt: str = field(default=None)
     max_context_tokens: int = field(default=None)

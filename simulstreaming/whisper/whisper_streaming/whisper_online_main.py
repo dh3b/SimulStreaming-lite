@@ -36,11 +36,8 @@ def processor_args(parser):
                         help='Minimum audio chunk size in seconds. It waits up to this time to do processing. If the processing takes shorter '
                         'time, it waits, otherwise it processes the whole segment that was received by this time.')
 
-    group.add_argument('--lan', '--language', type=str, default="en", 
+    group.add_argument('--lan', '--language', type=str, default="en",
                         help="Source language code, e.g. en, de, cs, or auto for automatic language detection from speech.")
-    group.add_argument('--task', type=str, default='transcribe', 
-                        choices=["transcribe","translate"],
-                        help="Transcribe or translate.")
 
     group.add_argument('--vac', action="store_true", default=False, 
                         help='Use VAC = voice activity controller. Recommended. Requires torch.')
@@ -70,12 +67,6 @@ def asr_factory(args, factory=None):
     if args.vac:
         from .vac_online_processor import VACOnlineASRProcessor
         online = VACOnlineASRProcessor(args.min_chunk_size, online)
-
-    if args.task == "translate":
-        if args.model_path.endswith(".en.pt"):
-            logger.error(f"The model {args.model_path} is English only. Translation is not available. Terminating.")
-            sys.exit(1)
-        asr.set_translate_task()
 
     return asr, online
 

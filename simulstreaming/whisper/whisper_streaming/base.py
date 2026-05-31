@@ -27,9 +27,6 @@ class ASRBase:
 
     def use_vad(self):
         raise NotImplemented("must be implemented in the child class")
-
-    def set_translate_task(self):
-        raise NotImplemented("must be implemented in the child class")
     
 
 class OnlineProcessorInterface:

@@ -66,7 +66,7 @@ def simul_asr_factory(args):
             raise ValueError("Invalid decoder type. Use 'beam' or 'greedy'.")
         # else: it is greedy or beam, that's ok 
     
-    a = { v:getattr(args, v) for v in ["model_path", "cif_ckpt_path", "frame_threshold", "audio_min_len", "audio_max_len", "beams", "task",
+    a = { v:getattr(args, v) for v in ["model_path", "cif_ckpt_path", "frame_threshold", "audio_min_len", "audio_max_len", "beams",
                                        "never_fire", 'init_prompt', 'static_init_prompt', 'max_context_tokens', "logdir"
                                        ]}
     a["language"] = args.lan
@@ -85,19 +85,18 @@ class SimulWhisperASR(ASRBase):
     
     sep = " "
 
-    def __init__(self, language, model_path, cif_ckpt_path, frame_threshold, audio_max_len, audio_min_len, segment_length, beams, task, 
+    def __init__(self, language, model_path, cif_ckpt_path, frame_threshold, audio_max_len, audio_min_len, segment_length, beams,
                  decoder_type, never_fire, init_prompt, static_init_prompt, max_context_tokens, logdir):
         cfg = AlignAttConfig(
-            model_path=model_path, 
+            model_path=model_path,
             segment_length=segment_length,
             frame_threshold=frame_threshold,
             language=language,
-            audio_max_len=audio_max_len, 
+            audio_max_len=audio_max_len,
             audio_min_len=audio_min_len,
             cif_ckpt_path=cif_ckpt_path,
-            decoder_type=decoder_type, #"greedy" if beams==1 else "beam",
+            decoder_type=decoder_type,
             beam_size=beams,
-            task=task,
             never_fire=never_fire,
             init_prompt=init_prompt,
             max_context_tokens=max_context_tokens,
@@ -119,10 +118,6 @@ class SimulWhisperASR(ASRBase):
     
     def use_vad(self):
         print("VAD not implemented",file=sys.stderr)
-
-    def set_translate_task(self):
-        # this is not used. Translate task is set another way.
-        pass
 
 
 class SimulWhisperOnline(OnlineProcessorInterface):

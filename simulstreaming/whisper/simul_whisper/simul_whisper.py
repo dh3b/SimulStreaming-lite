@@ -38,18 +38,16 @@ class PaddedAlignAttWhisper:
         self.log_segments = 0
         if cfg.logdir is not None and not os.path.exists(cfg.logdir):
             os.makedirs(cfg.logdir)
-        model_name = os.path.basename(cfg.model_path).replace(".pt", "")
-        model_path = os.path.dirname(os.path.abspath(cfg.model_path))
-        self.model = load_model(name=model_name, download_root=model_path)
+        self.model = load_model(name=cfg.model_path)
 
         logger.info(f"Model dimensions: {self.model.dims}")
 
         self.decode_options = DecodingOptions(
-            language = cfg.language, 
+            language = cfg.language,
             without_timestamps = True,
-            task=cfg.task
+            task="transcribe"
         )
-        self.tokenizer_is_multilingual = not model_name.endswith(".en")
+        self.tokenizer_is_multilingual = not cfg.model_path.endswith(".en")
         self.create_tokenizer(cfg.language if cfg.language != "auto" else None)
         self.detected_language = cfg.language if cfg.language != "auto" else None
         

@@ -111,7 +111,3 @@ class VACOnlineASRProcessor(OnlineProcessorInterface):
         self.is_currently_final = False
         ret["is_final"] = True
         return ret
-
-# TODO: this needs to be adapted to translate
-        # b,e,t_ret = self.online.finish()
-#        return (b,e,t_ret+" ŽžŽžENDofVOICEžŽžŽ")
